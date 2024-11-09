@@ -1,6 +1,8 @@
 import streamlit as st
 import pickle
 import numpy as np
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
 
 # Load the pre-trained pipeline
 with open('poly_regression_pipeline.pkl', 'rb') as file:

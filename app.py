@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 
 # Load the pre-trained pipeline
-with open('pipeline.pkl', 'rb') as file:
+with open('poly_regression_pipeline.pkl', 'rb') as file:
     pipeline = pickle.load(file)
 
 # Define a function to make predictions

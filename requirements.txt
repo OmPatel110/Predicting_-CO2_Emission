@@ -8,3 +8,4 @@ protobuf==3.19.0
 setuptools
 streamlit-nightly
 cloudpickle
+ploty

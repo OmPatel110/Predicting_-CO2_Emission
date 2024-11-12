@@ -33,8 +33,8 @@ def predict(input_data):
     return prediction[0]
 
 # Streamlit UI for input
-st.title("Hourly-Based CO2 Emission Prediction")
-st.subheader("Accurately forecast your steel production’s environmental impact on an hourly basis and explore actionable insights for sustainability.")
+st.title("Hourly CO2 Emission in Steel Production")
+st.subheader("Predict and analyze CO2 emissions on an hourly basis to support sustainable production insights.")
 
 # Define the inputs for the user to fill in with larger ranges
 usage_kwh = st.number_input(

@@ -34,15 +34,39 @@ def predict(input_data):
 
 # Streamlit UI for input
 st.title("CO2 Emission Prediction")
+st.subheader("Accurately forecast your steel production’s environmental impact and explore actionable insights for sustainability.")
 
-st.write("""This app predicts CO2 emissions based on user inputs.""")
-
-# Define the inputs for the user to fill in
-usage_kwh = st.number_input('Enter Usage_kWh', min_value=0.0, step=1.0)
-lagging_current_reactive_power_kvarh = st.number_input('Enter Lagging Current Reactive Power kVarh', min_value=0.0, step=1.0)
-leading_current_reactive_power_kvarh = st.number_input('Enter Leading Current Reactive Power kVarh', min_value=0.0, step=1.0)
-lagging_current_power_factor = st.number_input('Enter Lagging Current Power Factor', min_value=0.0, step=0.01)
-nsm = st.number_input('Enter NSM', min_value=0, step=1)  # Ensure NSM is entered as integer
+# Define the inputs for the user to fill in with larger ranges
+usage_kwh = st.number_input(
+    'Enter Usage_kWh (Hourly Value)', 
+    min_value=0.0, 
+    step=10.0, 
+    help="Typical value is around 120 kWh for an hourly period."
+)
+lagging_current_reactive_power_kvarh = st.number_input(
+    'Enter Lagging Current Reactive Power kVarh (Hourly Value)', 
+    min_value=0.0, 
+    step=1.0,
+    help="Typical value is around 60 for an hourly period."
+)
+leading_current_reactive_power_kvarh = st.number_input(
+    'Enter Leading Current Reactive Power kVarh (Hourly Value)', 
+    min_value=0.0, 
+    step=1.0,
+    help="Typical value is around 16 for an hourly period."
+)
+lagging_current_power_factor = st.number_input(
+    'Enter Lagging Current Power Factor (Hourly Value)', 
+    min_value=0.0, 
+    step=1.0,
+    help="Typical value is around 80 for an hourly period."
+)
+nsm = st.number_input(
+    'Enter NSM (Hourly Value)', 
+    min_value=0, 
+    step=1000, 
+    help="Typical value is around 42,000 for an hourly period."
+)
 
 # Collect all the inputs into a dictionary
 user_input = {
@@ -54,6 +78,7 @@ user_input = {
 }
 
 # When the user clicks the "Predict" button
+# When the user clicks the "Predict" button
 if st.button('Predict'):
     if usage_kwh == 0 or nsm == 0:
         # Display a warning toast-like message
@@ -62,6 +87,34 @@ if st.button('Predict'):
         try:
             # Make the prediction with the updated user input
             prediction = predict(user_input)
-            st.write(f"Predicted CO2 Emission: {prediction:.2f} tons")
+            
+            # Since the original data was collected at 15-minute intervals, multiply by 4 to scale to an hourly basis
+            prediction_hourly = prediction * 4  # Scale to hourly CO2 emission
+
+            # Display the prediction result for an hourly basis
+            st.write(f"Predicted CO2 Emission (hourly basis): {prediction_hourly:.2f} tons")
+            
+            # Tree plantation analogy with a range (15 kg to 30 kg of CO2 per tree per year)
+            co2_per_tree_min = 0.015  # 15 kg of CO2 per tree per year
+            co2_per_tree_max = 0.030  # 30 kg of CO2 per tree per year
+            
+            # Calculate the range of equivalent trees
+            min_trees = prediction_hourly / co2_per_tree_max
+            max_trees = prediction_hourly / co2_per_tree_min
+            
+            # Display the range of trees for the predicted CO2 emission
+            st.write(f"🌳 To offset this CO2 emission, you'd need between {min_trees:.0f} and {max_trees:.0f} trees!")
+            
+            # Fun fact about tree benefits
+            st.write("""
+                🌍 Planting trees helps absorb CO2, improve air quality, and support biodiversity.
+                🌱 On average, a mature tree can absorb between 15 to 30 kg of CO2 annually. 
+                It's a simple and effective way to contribute to a cleaner, greener planet!
+            """)
+
+            # Additional comparison to everyday activities (driving or flying)
+            st.write(f"🚗 Did you know? This CO2 emission is equivalent to driving a car for about {prediction_hourly * 888} kilometers!")
+            st.write(f"✈️ Or flying for about {prediction_hourly * 160} kilometers in an airplane!")
+
         except ValueError as e:
             st.error(f"Prediction error: {str(e)}")

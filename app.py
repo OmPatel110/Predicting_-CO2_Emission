@@ -33,36 +33,36 @@ def predict(input_data):
     return prediction[0]
 
 # Streamlit UI for input
-st.title("CO2 Emission Prediction")
-st.subheader("Accurately forecast your steel production’s environmental impact and explore actionable insights for sustainability.")
+st.title("Hourly-Based CO2 Emission Prediction")
+st.subheader("Accurately forecast your steel production’s environmental impact on an hourly basis and explore actionable insights for sustainability.")
 
 # Define the inputs for the user to fill in with larger ranges
 usage_kwh = st.number_input(
-    'Enter Usage_kWh (Hourly Value)', 
+    'Enter Usage_kWh', 
     min_value=0.0, 
     step=10.0, 
     help="Typical value is around 120 kWh for an hourly period."
 )
 lagging_current_reactive_power_kvarh = st.number_input(
-    'Enter Lagging Current Reactive Power kVarh (Hourly Value)', 
+    'Enter Lagging Current Reactive Power kVarh', 
     min_value=0.0, 
     step=1.0,
     help="Typical value is around 60 for an hourly period."
 )
 leading_current_reactive_power_kvarh = st.number_input(
-    'Enter Leading Current Reactive Power kVarh (Hourly Value)', 
+    'Enter Leading Current Reactive Power kVarh', 
     min_value=0.0, 
     step=1.0,
     help="Typical value is around 16 for an hourly period."
 )
 lagging_current_power_factor = st.number_input(
-    'Enter Lagging Current Power Factor (Hourly Value)', 
+    'Enter Lagging Current Power Factor', 
     min_value=0.0, 
     step=1.0,
     help="Typical value is around 80 for an hourly period."
 )
 nsm = st.number_input(
-    'Enter NSM (Hourly Value)', 
+    'Enter NSM', 
     min_value=0, 
     step=1000, 
     help="Typical value is around 42,000 for an hourly period."

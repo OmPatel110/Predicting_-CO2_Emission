@@ -91,7 +91,7 @@ if st.button('Predict'):
             prediction_hourly = prediction * 4  # Scale to hourly CO2 emission
 
             # Display the prediction result for an hourly basis
-            st.write(f"Predicted CO2 Emission (hourly basis): {prediction_hourly:.2f} tons")
+            st.write(f"Predicted CO₂ Emission (hourly basis): {prediction_hourly:.2f} tons")
             
             # Tree plantation analogy with a range (15 kg to 30 kg of CO2 per tree per year)
             co2_per_tree_min = 0.015  # 15 kg of CO2 per tree per year

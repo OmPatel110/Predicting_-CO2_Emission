@@ -33,8 +33,8 @@ def predict(input_data):
     return prediction[0]
 
 # Streamlit UI for input
-st.title("Hourly CO2 Emission in Steel Production")
-st.subheader("Predict and analyze CO2 emissions on an hourly basis to support sustainable production insights.")
+st.title("Hourly CO₂ Emission in Steel Production")
+st.subheader("Predict and analyze CO₂ emissions on an hourly basis to support sustainable production insights.")
 
 # Define the inputs for the user to fill in with larger ranges
 usage_kwh = st.number_input(
@@ -102,17 +102,17 @@ if st.button('Predict'):
             max_trees = prediction_hourly / co2_per_tree_min
             
             # Display the range of trees for the predicted CO2 emission
-            st.write(f"🌳 To offset this CO2 emission, you'd need between {min_trees:.0f} and {max_trees:.0f} trees! on hourly basis")
+            st.write(f"🌳 To offset this CO₂ emission, you'd need between {min_trees:.0f} and {max_trees:.0f} trees! on hourly basis")
             
             # Fun fact about tree benefits
             st.write("""
                 🌍 Planting trees helps absorb CO2, improve air quality, and support biodiversity.
-                🌱 On average, a mature tree can absorb between 15 to 30 kg of CO2 annually. 
+                🌱 On average, a mature tree can absorb between 15 to 30 kg of CO₂ annually. 
                 It's a simple and effective way to contribute to a cleaner, greener planet!
             """)
 
             # Additional comparison to everyday activities (driving or flying)
-            st.write(f"🚗 Did you know? This CO2 emission is equivalent to driving a car for about {prediction_hourly * 888:.1f} kilometers!")
+            st.write(f"🚗 Did you know? This CO₂ emission is equivalent to driving a car for about {prediction_hourly * 888:.1f} kilometers!")
             st.write(f"✈️ Or flying for about {prediction_hourly * 160:.1f} kilometers in an airplane!")
 
         except ValueError as e:

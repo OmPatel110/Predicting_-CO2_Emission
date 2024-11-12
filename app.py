@@ -1,6 +1,8 @@
 import pandas as pd
 import streamlit as st
 import cloudpickle
+import plotly.graph_objects as go
+import plotly.express as px
 
 # Load the pre-trained pipeline
 with open('poly_regression_pipeline.pkl', 'rb') as f:
@@ -78,7 +80,6 @@ user_input = {
 }
 
 # When the user clicks the "Predict" button
-# When the user clicks the "Predict" button
 if st.button('Predict'):
     if usage_kwh == 0 or nsm == 0:
         # Display a warning toast-like message
@@ -103,7 +104,7 @@ if st.button('Predict'):
             max_trees = prediction_hourly / co2_per_tree_min
             
             # Display the range of trees for the predicted CO2 emission
-            st.write(f"🌳 To offset this CO2 emission, you'd need between {min_trees:.0f} and {max_trees:.0f} trees!")
+            st.write(f"🌳 To offset this CO2 emission, you'd need between {min_trees:.0f} and {max_trees:.0f} trees! on hourly basis")
             
             # Fun fact about tree benefits
             st.write("""
@@ -113,8 +114,34 @@ if st.button('Predict'):
             """)
 
             # Additional comparison to everyday activities (driving or flying)
-            st.write(f"🚗 Did you know? This CO2 emission is equivalent to driving a car for about {prediction_hourly * 888} kilometers!")
-            st.write(f"✈️ Or flying for about {prediction_hourly * 160} kilometers in an airplane!")
+            st.write(f"🚗 Did you know? This CO2 emission is equivalent to driving a car for about {prediction_hourly * 888:.1f} kilometers!")
+            st.write(f"✈️ Or flying for about {prediction_hourly * 160:.1f} kilometers in an airplane!")
+
+ # Gauge Chart for CO2 Emission Visualization
+            fig = go.Figure(go.Indicator(
+                mode="gauge+number",
+                value=prediction_hourly * 4,  # CO2 emission
+                title={'text': "CO2 Emission (kg)"},
+                gauge={'axis': {'range': [None, 500]}}
+            ))
+            st.plotly_chart(fig)
+
+            # Line Chart for Emission Over Time (Example)
+            fig = px.line(x=[1, 2, 3, 4], y=[10, 11, 12, 13], title="Emission Over Time")
+            st.plotly_chart(fig)
+
+            # Animated CO2 Emission Increase Over Time (Example)
+            fig = go.Figure(go.Scatter(
+                x=[1, 2, 3, 4],
+                y=[10, 20, 30, 40],
+                mode="lines+markers",
+                marker=dict(color="blue", size=12)
+            ))
+            fig.update_layout(title="CO2 Emissions Over Time", updatemenus=[dict(type='buttons', showactive=False, buttons=[dict(label='Play', method='animate', args=[None, dict(frame=dict(duration=1000, redraw=True), fromcurrent=True)])])])
+            st.plotly_chart(fig)
 
         except ValueError as e:
             st.error(f"Prediction error: {str(e)}")
+
+
+
